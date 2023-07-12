@@ -1,0 +1,37 @@
+aoc22_01: PROCEDURE OPTIONS(MAIN);
+    DECLARE 
+		input 				FILE,
+    	line 				CHARACTER(20) VARYING,
+    	sum 				FIXED DECIMAL(10,0),
+    	max_sum 			FIXED DECIMAL(10,0),
+		end_of_file_flag	BIT(1);
+
+    end_of_file_flag = '0'B;
+    ON ENDFILE(input) end_of_file_flag = '1'B;
+
+    OPEN FILE(input) TITLE('AOC2201.TXT') STREAM INPUT;    
+    sum = 0;
+    max_sum = 0;
+    GET FILE(input)
+	EDIT(LINE)(A);
+    DO WHILE (~end_of_file_flag);
+		/* PUT LIST(LINE); */
+		IF (line = '') THEN
+	   	DO;
+           IF (sum > max_sum) THEN max_sum = sum;
+           sum = 0;
+		END;
+        ELSE
+		DO;
+           sum = sum + DECIMAL(line,10,0);
+       	END;
+		GET FILE(input) SKIP
+			EDIT(line)(A);
+    END;
+    IF (sum > max_sum) THEN max_sum = sum;
+    PUT SKIP LIST('THE GREATEST SUM IS ', max_sum);
+    CLOSE FILE(input);
+END aoc22_01;
+
+
+
