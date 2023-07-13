@@ -1,10 +1,10 @@
 aoc22_01: PROCEDURE OPTIONS(MAIN);
     DECLARE 
-        input 				FILE,
-        line 				CHARACTER(20) VARYING,
+        input               FILE,
+        line                CHARACTER(20) VARYING,
         sum                 FIXED DECIMAL(10,0),
     	max_sum(3)          FIXED DECIMAL(10,0),
-		end_of_file_flag    BIT(1);
+        end_of_file_flag    BIT(1);
 
     end_of_file_flag = '0'B;
     ON ENDFILE(input) end_of_file_flag = '1'B;
@@ -47,7 +47,7 @@ aoc22_01: PROCEDURE OPTIONS(MAIN);
             EDIT(line)(A);
     END;
     CALL set_max_sum;
-    PUT SKIP LIST('THE SUM OF THE 3 GREATEST SUM IS ', 
+    PUT SKIP LIST('THE SUM OF THE 3 GREATEST SUMS IS ', 
         max_sum(1) + max_sum(2) + max_sum(3));
     CLOSE FILE(input);
 END aoc22_01;
