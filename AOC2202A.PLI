@@ -1,10 +1,10 @@
 aoc22_02:
     PROCEDURE OPTIONS(MAIN);
     DECLARE 
-        input 				FILE,
+        input 		    FILE,
         (symb1, symb2)      CHARACTER(1) VARYING,
         (n, sum)            FIXED BINARY(15),
-		end_of_file_flag    BIT(1);
+	end_of_file_flag    BIT(1);
 
 
     end_of_file_flag = '0'B;
