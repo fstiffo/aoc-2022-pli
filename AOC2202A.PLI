@@ -39,8 +39,8 @@ score:
     outcome = 0;
     IF (p1 = 'A') THEN DO;
         IF (p2 = 'X') THEN outcome = 3;
-            ELSE IF (p2 = 'Y') THEN outcome = 6;
-            ELSE IF (p2 = 'Z') THEN outcome = 0;
+        ELSE IF (p2 = 'Y') THEN outcome = 6;
+        ELSE IF (p2 = 'Z') THEN outcome = 0;
     END;
     ELSE IF (p1 = 'B') THEN DO;
         IF (p2 = 'X') THEN outcome = 0;
