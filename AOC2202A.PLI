@@ -1,0 +1,60 @@
+aoc22_02:
+    PROCEDURE OPTIONS(MAIN);
+    DECLARE 
+        input 				FILE,
+        (symb1, symb2)      CHARACTER(1) VARYING,
+        (n, sum)            FIXED BINARY(15),
+		end_of_file_flag    BIT(1);
+
+
+    end_of_file_flag = '0'B;
+    ON ENDFILE(input) end_of_file_flag = '1'B;
+
+    OPEN FILE(input) TITLE('$1.txt') STREAM INPUT;
+    sum = 0;
+    n = 0;
+    GET FILE(input)
+        EDIT(symb1, symb2)(A(1),X(1),A(1));
+    DO WHILE (symb1 ^= '*');
+        n = n + 1;
+        /* PUT SKIP LIST(n, symb1, symb2, score(symb1, symb2)); */
+        sum = sum + score(symb1, symb2);
+        GET FILE(input) SKIP
+            EDIT(symb1, symb2)(A(1),X(1),A(1));
+    END;
+    CLOSE FILE(input);
+    PUT SKIP LIST('TOTAL SCORE:', sum);
+
+score:
+    PROCEDURE (p1, p2) RETURNS (FIXED BINARY(15));
+    DECLARE
+        (p1, p2)            CHARACTER(1),
+        (p2_score, outcome) FIXED BINARY(15);
+
+    p2_score = 0;
+    IF (p2 = 'X') THEN p2_score = 1;
+    ELSE IF (p2 = 'Y') THEN p2_score = 2;
+    ELSE IF (p2 = 'Z') THEN p2_score = 3;
+
+    outcome = 0;
+    IF (p1 = 'A') THEN DO;
+        IF (p2 = 'X') THEN outcome = 3;
+            ELSE IF (p2 = 'Y') THEN outcome = 6;
+            ELSE IF (p2 = 'Z') THEN outcome = 0;
+    END;
+    ELSE IF (p1 = 'B') THEN DO;
+        IF (p2 = 'X') THEN outcome = 0;
+        ELSE IF (p2 = 'Y') THEN outcome = 3;
+        ELSE IF (p2 = 'Z') THEN outcome = 6;
+    END;
+    ELSE IF (p1 = 'C') THEN DO;
+        IF (p2 = 'X') THEN outcome = 6;
+        ELSE IF (p2 = 'Y') THEN outcome = 0;
+        ELSE IF (p2 = 'Z') THEN outcome = 3;
+    END;
+
+    RETURN (p2_score + outcome);
+
+END score;
+
+END aoc22_02;
